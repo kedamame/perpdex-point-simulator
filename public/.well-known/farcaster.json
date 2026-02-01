@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "frame": {
+    "version": "1",
+    "name": "PerpDex Airdrop Calculator",
+    "iconUrl": "/icon-192.png",
+    "homeUrl": "/",
+    "imageUrl": "/og-image.svg",
+    "buttonTitle": "Open Calculator",
+    "splashImageUrl": "/og-image.svg",
+    "splashBackgroundColor": "#111827",
+    "webhookUrl": ""
+  }
+}

@@ -350,68 +350,77 @@ export default function Calculator() {
               {rarityTiers.map((tier) => (
                 <div
                   key={tier.id}
-                  className="flex items-center gap-2 bg-gray-700 rounded-lg p-3"
+                  className="bg-gray-700 rounded-lg p-3 space-y-2"
                 >
-                  <input
-                    type="text"
-                    value={tier.name}
-                    onChange={(e) =>
-                      updateRarityTier(tier.id, "name", e.target.value)
-                    }
-                    placeholder={t.rarityName}
-                    className="flex-1 bg-gray-600 border border-gray-500 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
-                  />
-                  <input
-                    type="number"
-                    value={tier.count || ""}
-                    onChange={(e) =>
-                      updateRarityTier(
-                        tier.id,
-                        "count",
-                        parseInt(e.target.value) || 0
-                      )
-                    }
-                    placeholder={t.count}
-                    className="w-24 bg-gray-600 border border-gray-500 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
-                  />
-                  <div className="flex items-center gap-1">
+                  {/* Row 1: Name + Delete */}
+                  <div className="flex items-center gap-2">
                     <input
-                      type="number"
-                      value={tier.allocationPercent || ""}
+                      type="text"
+                      value={tier.name}
                       onChange={(e) =>
-                        updateRarityTier(
-                          tier.id,
-                          "allocationPercent",
-                          parseFloat(e.target.value) || 0
-                        )
+                        updateRarityTier(tier.id, "name", e.target.value)
                       }
-                      placeholder="%"
-                      min="0"
-                      max="100"
-                      className="w-16 bg-gray-600 border border-gray-500 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
+                      placeholder={t.rarityName}
+                      className="flex-1 bg-gray-600 border border-gray-500 rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-blue-500"
                     />
-                    <span className="text-gray-400 text-sm">%</span>
-                  </div>
-                  {rarityTiers.length > 1 && (
-                    <button
-                      onClick={() => removeRarityTier(tier.id)}
-                      className="text-red-400 hover:text-red-300 p-1"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                    {rarityTiers.length > 1 && (
+                      <button
+                        onClick={() => removeRarityTier(tier.id)}
+                        className="text-red-400 hover:text-red-300 p-1 shrink-0"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  )}
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                  {/* Row 2: Count + Percent */}
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1">
+                      <label className="block text-xs text-gray-400 mb-1">{t.count}</label>
+                      <input
+                        type="number"
+                        value={tier.count || ""}
+                        onChange={(e) =>
+                          updateRarityTier(
+                            tier.id,
+                            "count",
+                            parseInt(e.target.value) || 0
+                          )
+                        }
+                        placeholder="0"
+                        className="w-full bg-gray-600 border border-gray-500 rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-xs text-gray-400 mb-1">%</label>
+                      <input
+                        type="number"
+                        value={tier.allocationPercent || ""}
+                        onChange={(e) =>
+                          updateRarityTier(
+                            tier.id,
+                            "allocationPercent",
+                            parseFloat(e.target.value) || 0
+                          )
+                        }
+                        placeholder="0"
+                        min="0"
+                        max="100"
+                        className="w-full bg-gray-600 border border-gray-500 rounded px-2 py-1.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
                 </div>
               ))}
 

@@ -32,11 +32,20 @@ export const metadata: Metadata = {
     images: ["/image.png"],
   },
   other: {
-    "fc:frame": "vNext",
-    "fc:frame:image": "https://perpdex-point-simulator.vercel.app/image.png",
-    "fc:frame:button:1": "Open Calculator",
-    "fc:frame:button:1:action": "link",
-    "fc:frame:button:1:target": "https://perpdex-point-simulator.vercel.app",
+    "fc:frame": JSON.stringify({
+      version: "1",
+      imageUrl: "https://perpdex-point-simulator.vercel.app/image.png",
+      button: {
+        title: "Open Calculator",
+        action: {
+          type: "launch_frame",
+          name: "PerpDexPointSimulator",
+          url: "https://perpdex-point-simulator.vercel.app",
+          splashImageUrl: "https://perpdex-point-simulator.vercel.app/splash.png",
+          splashBackgroundColor: "#3b82f6",
+        },
+      },
+    }),
   },
 };
 

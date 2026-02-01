@@ -9,7 +9,66 @@ interface RarityTier {
   allocationPercent: number;
 }
 
+type Language = "en" | "ja";
+
+const translations = {
+  en: {
+    title: "PerpDex Airdrop Calculator",
+    subtitle: "Calculate the value of points and NFT airdrops",
+    basicSettings: "Basic Settings",
+    totalPoints: "Total Points",
+    expectedFdv: "Expected FDV ($)",
+    totalTokens: "Total Tokens",
+    airdropPercent: "Airdrop Allocation (%)",
+    nftSettings: "NFT Settings",
+    nftAllocation: "NFT Allocation (%)",
+    totalNftCount: "Total NFT Count",
+    raritySettings: "Rarity Settings",
+    rarityName: "Rarity name",
+    count: "Count",
+    addRarity: "Add Rarity",
+    total: "Total",
+    results: "Results",
+    tokenPrice: "Token Price",
+    totalAirdropValue: "Total Airdrop Value",
+    valuePerPoint: "Value per Point",
+    avgValuePerNft: "Avg Value per NFT",
+    valueByRarity: "Value by Rarity",
+    notSet: "Not set",
+    disclaimer: "* These calculations are estimates and do not guarantee actual airdrop values",
+  },
+  ja: {
+    title: "PerpDex Airdrop Calculator",
+    subtitle: "ポイントとNFTのエアドロップ価値を計算",
+    basicSettings: "基本設定",
+    totalPoints: "総ポイント",
+    expectedFdv: "想定FDV ($)",
+    totalTokens: "総トークン数",
+    airdropPercent: "エアドロップ割合 (%)",
+    nftSettings: "NFT設定",
+    nftAllocation: "NFTへの割り当て (%)",
+    totalNftCount: "総NFT枚数",
+    raritySettings: "レアリティ設定",
+    rarityName: "レアリティ名",
+    count: "枚数",
+    addRarity: "レアリティを追加",
+    total: "合計",
+    results: "計算結果",
+    tokenPrice: "トークン価格",
+    totalAirdropValue: "エアドロップ総価値",
+    valuePerPoint: "1ポイントあたりの価値",
+    avgValuePerNft: "NFT1枚あたりの平均価値",
+    valueByRarity: "レアリティ別価値",
+    notSet: "未設定",
+    disclaimer: "* この計算は想定値であり、実際のエアドロップ価値を保証するものではありません",
+  },
+};
+
 export default function Calculator() {
+  // Language
+  const [lang, setLang] = useState<Language>("en");
+  const t = translations[lang];
+
   // 基本入力
   const [totalPoints, setTotalPoints] = useState<string>("");
   const [fdv, setFdv] = useState<string>("");
@@ -130,23 +189,47 @@ export default function Calculator() {
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4 space-y-6">
+      {/* Language Switcher */}
+      <div className="flex justify-end">
+        <div className="flex bg-gray-800 rounded-lg p-1">
+          <button
+            onClick={() => setLang("en")}
+            className={`px-3 py-1 text-sm rounded-md transition-colors ${
+              lang === "en"
+                ? "bg-blue-600 text-white"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            EN
+          </button>
+          <button
+            onClick={() => setLang("ja")}
+            className={`px-3 py-1 text-sm rounded-md transition-colors ${
+              lang === "ja"
+                ? "bg-blue-600 text-white"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            JA
+          </button>
+        </div>
+      </div>
+
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-white mb-2">
-          PerpDex Airdrop Calculator
-        </h1>
-        <p className="text-gray-400 text-sm">
-          ポイントとNFTのエアドロップ価値を計算
-        </p>
+        <h1 className="text-2xl font-bold text-white mb-2">{t.title}</h1>
+        <p className="text-gray-400 text-sm">{t.subtitle}</p>
       </div>
 
       {/* 基本入力 */}
       <div className="bg-gray-800 rounded-xl p-5 space-y-4">
-        <h2 className="text-lg font-semibold text-white mb-3">基本設定</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">
+          {t.basicSettings}
+        </h2>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-gray-400 mb-1">
-              総ポイント
+              {t.totalPoints}
             </label>
             <input
               type="number"
@@ -158,7 +241,7 @@ export default function Calculator() {
           </div>
           <div>
             <label className="block text-sm text-gray-400 mb-1">
-              想定FDV ($)
+              {t.expectedFdv}
             </label>
             <input
               type="number"
@@ -170,7 +253,7 @@ export default function Calculator() {
           </div>
           <div>
             <label className="block text-sm text-gray-400 mb-1">
-              総トークン数
+              {t.totalTokens}
             </label>
             <input
               type="number"
@@ -182,7 +265,7 @@ export default function Calculator() {
           </div>
           <div>
             <label className="block text-sm text-gray-400 mb-1">
-              エアドロップ割合 (%)
+              {t.airdropPercent}
             </label>
             <input
               type="number"
@@ -200,7 +283,7 @@ export default function Calculator() {
       {/* NFT設定 */}
       <div className="bg-gray-800 rounded-xl p-5 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white">NFT設定</h2>
+          <h2 className="text-lg font-semibold text-white">{t.nftSettings}</h2>
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -216,7 +299,7 @@ export default function Calculator() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-gray-400 mb-1">
-                NFTへの割り当て (%)
+                {t.nftAllocation}
               </label>
               <input
                 type="number"
@@ -230,7 +313,7 @@ export default function Calculator() {
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-1">
-                総NFT枚数
+                {t.totalNftCount}
               </label>
               <input
                 type="number"
@@ -248,7 +331,9 @@ export default function Calculator() {
       {enableNft && (
         <div className="bg-gray-800 rounded-xl p-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">レアリティ設定</h2>
+            <h2 className="text-lg font-semibold text-white">
+              {t.raritySettings}
+            </h2>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
@@ -262,7 +347,7 @@ export default function Calculator() {
 
           {enableRarity && (
             <div className="space-y-3">
-              {rarityTiers.map((tier, index) => (
+              {rarityTiers.map((tier) => (
                 <div
                   key={tier.id}
                   className="flex items-center gap-2 bg-gray-700 rounded-lg p-3"
@@ -273,7 +358,7 @@ export default function Calculator() {
                     onChange={(e) =>
                       updateRarityTier(tier.id, "name", e.target.value)
                     }
-                    placeholder="レアリティ名"
+                    placeholder={t.rarityName}
                     className="flex-1 bg-gray-600 border border-gray-500 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
                   />
                   <input
@@ -286,7 +371,7 @@ export default function Calculator() {
                         parseInt(e.target.value) || 0
                       )
                     }
-                    placeholder="枚数"
+                    placeholder={t.count}
                     className="w-24 bg-gray-600 border border-gray-500 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-blue-500"
                   />
                   <div className="flex items-center gap-1">
@@ -348,7 +433,7 @@ export default function Calculator() {
                       d="M12 4v16m8-8H4"
                     />
                   </svg>
-                  レアリティを追加
+                  {t.addRarity}
                 </button>
                 <span
                   className={`text-sm ${
@@ -357,7 +442,7 @@ export default function Calculator() {
                       : "text-yellow-400"
                   }`}
                 >
-                  合計: {totalRarityPercent}%
+                  {t.total}: {totalRarityPercent}%
                 </span>
               </div>
             </div>
@@ -367,17 +452,17 @@ export default function Calculator() {
 
       {/* 計算結果 */}
       <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-xl p-5 space-y-4">
-        <h2 className="text-lg font-semibold text-white mb-3">計算結果</h2>
+        <h2 className="text-lg font-semibold text-white mb-3">{t.results}</h2>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-black/30 rounded-lg p-4">
-            <p className="text-gray-400 text-sm mb-1">トークン価格</p>
+            <p className="text-gray-400 text-sm mb-1">{t.tokenPrice}</p>
             <p className="text-xl font-bold text-white">
               {formatNumber(results.tokenPrice)}
             </p>
           </div>
           <div className="bg-black/30 rounded-lg p-4">
-            <p className="text-gray-400 text-sm mb-1">エアドロップ総価値</p>
+            <p className="text-gray-400 text-sm mb-1">{t.totalAirdropValue}</p>
             <p className="text-xl font-bold text-white">
               {formatNumber(results.totalAirdropValue)}
             </p>
@@ -385,7 +470,7 @@ export default function Calculator() {
         </div>
 
         <div className="bg-black/30 rounded-lg p-4">
-          <p className="text-gray-400 text-sm mb-1">1ポイントあたりの価値</p>
+          <p className="text-gray-400 text-sm mb-1">{t.valuePerPoint}</p>
           <p className="text-2xl font-bold text-green-400">
             {formatNumber(results.valuePerPoint)}
           </p>
@@ -394,9 +479,7 @@ export default function Calculator() {
         {enableNft && (
           <>
             <div className="bg-black/30 rounded-lg p-4">
-              <p className="text-gray-400 text-sm mb-1">
-                NFT1枚あたりの平均価値
-              </p>
+              <p className="text-gray-400 text-sm mb-1">{t.avgValuePerNft}</p>
               <p className="text-2xl font-bold text-yellow-400">
                 {formatNumber(results.valuePerNft)}
               </p>
@@ -404,13 +487,13 @@ export default function Calculator() {
 
             {enableRarity && (
               <div className="space-y-2">
-                <p className="text-gray-400 text-sm">レアリティ別価値</p>
+                <p className="text-gray-400 text-sm">{t.valueByRarity}</p>
                 {results.rarityResults.map((tier) => (
                   <div
                     key={tier.id}
                     className="flex justify-between items-center bg-black/20 rounded-lg px-4 py-2"
                   >
-                    <span className="text-white">{tier.name || "未設定"}</span>
+                    <span className="text-white">{tier.name || t.notSet}</span>
                     <span className="text-purple-400 font-semibold">
                       {formatNumber(tier.valuePerNft)}
                     </span>
@@ -422,9 +505,7 @@ export default function Calculator() {
         )}
       </div>
 
-      <p className="text-center text-gray-500 text-xs">
-        * この計算は想定値であり、実際のエアドロップ価値を保証するものではありません
-      </p>
+      <p className="text-center text-gray-500 text-xs">{t.disclaimer}</p>
     </div>
   );
 }

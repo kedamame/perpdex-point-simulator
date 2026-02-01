@@ -10,7 +10,7 @@
     "webhookUrl": "https://perpdex-point-simulator.vercel.app/api/webhook",
     "primaryCategory": "entertainment",
     "description": "You can calculate the airdrop value from your Perpdex points.",
-    "subtitle": "Calculating the expected airdrop value of Perpdex points"
+    "subtitle": "perpdex-point-simulator"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjIxMTE4OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweEFBZTM5NEQ1MWUyYzBhOTczNWUwQmI2NzdFMTJmMjE1MjVCRWI1NTIifQ",

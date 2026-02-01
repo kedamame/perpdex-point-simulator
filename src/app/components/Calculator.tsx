@@ -7,6 +7,7 @@ interface RarityTier {
   name: string;
   count: number;
   allocationPercent: number;
+  myCount: number;
 }
 
 type Language = "en" | "ja";
@@ -28,6 +29,9 @@ const translations = {
     count: "Count",
     addRarity: "Add Rarity",
     total: "Total",
+    myHoldings: "My Holdings",
+    myPoints: "My Points",
+    myNftCount: "My NFT Count",
     results: "Results",
     tokenPrice: "Token Price",
     totalAirdropValue: "Total Airdrop Value",
@@ -35,6 +39,10 @@ const translations = {
     avgValuePerNft: "Avg Value per NFT",
     valueByRarity: "Value by Rarity",
     notSet: "Not set",
+    myAirdropValue: "My Airdrop Value",
+    myPointsValue: "Points Value",
+    myNftValue: "NFT Value",
+    myTotalValue: "Total Value",
     disclaimer: "* These calculations are estimates and do not guarantee actual airdrop values",
   },
   ja: {
@@ -53,6 +61,9 @@ const translations = {
     count: "枚数",
     addRarity: "レアリティを追加",
     total: "合計",
+    myHoldings: "自分の保有数",
+    myPoints: "保有ポイント",
+    myNftCount: "保有NFT数",
     results: "計算結果",
     tokenPrice: "トークン価格",
     totalAirdropValue: "エアドロップ総価値",
@@ -60,6 +71,10 @@ const translations = {
     avgValuePerNft: "NFT1枚あたりの平均価値",
     valueByRarity: "レアリティ別価値",
     notSet: "未設定",
+    myAirdropValue: "自分のエアドロップ価値",
+    myPointsValue: "ポイント分",
+    myNftValue: "NFT分",
+    myTotalValue: "合計",
     disclaimer: "* この計算は想定値であり、実際のエアドロップ価値を保証するものではありません",
   },
 };
@@ -83,10 +98,14 @@ export default function Calculator() {
   // レアリティ設定
   const [enableRarity, setEnableRarity] = useState(false);
   const [rarityTiers, setRarityTiers] = useState<RarityTier[]>([
-    { id: "1", name: "Common", count: 0, allocationPercent: 50 },
-    { id: "2", name: "Rare", count: 0, allocationPercent: 30 },
-    { id: "3", name: "Epic", count: 0, allocationPercent: 20 },
+    { id: "1", name: "Common", count: 0, allocationPercent: 50, myCount: 0 },
+    { id: "2", name: "Rare", count: 0, allocationPercent: 30, myCount: 0 },
+    { id: "3", name: "Epic", count: 0, allocationPercent: 20, myCount: 0 },
   ]);
+
+  // 自分の保有数
+  const [myPoints, setMyPoints] = useState<string>("");
+  const [myNftCount, setMyNftCount] = useState<string>("");
 
   // 計算結果
   const results = useMemo(() => {
@@ -96,6 +115,8 @@ export default function Calculator() {
     const airdropPct = parseFloat(airdropPercent) || 0;
     const nftPct = parseFloat(nftAirdropPercent) || 0;
     const nftCount = parseFloat(totalNftCount) || 0;
+    const myPts = parseFloat(myPoints) || 0;
+    const myNfts = parseFloat(myNftCount) || 0;
 
     // トークン価格
     const tokenPrice = tokens > 0 ? fdvValue / tokens : 0;
@@ -124,12 +145,21 @@ export default function Calculator() {
     const rarityResults = rarityTiers.map((tier) => {
       const tierAllocation = nftAirdropValue * (tier.allocationPercent / 100);
       const valuePerTierNft = tier.count > 0 ? tierAllocation / tier.count : 0;
+      const myTierValue = valuePerTierNft * tier.myCount;
       return {
         ...tier,
         totalValue: tierAllocation,
         valuePerNft: valuePerTierNft,
+        myValue: myTierValue,
       };
     });
+
+    // 自分のエアドロップ価値
+    const myPointsValue = valuePerPoint * myPts;
+    const myNftValue = enableRarity
+      ? rarityResults.reduce((sum, tier) => sum + tier.myValue, 0)
+      : valuePerNft * myNfts;
+    const myTotalValue = myPointsValue + (enableNft ? myNftValue : 0);
 
     return {
       tokenPrice,
@@ -139,6 +169,9 @@ export default function Calculator() {
       nftAirdropValue,
       valuePerNft,
       rarityResults,
+      myPointsValue,
+      myNftValue,
+      myTotalValue,
     };
   }, [
     totalPoints,
@@ -148,14 +181,17 @@ export default function Calculator() {
     nftAirdropPercent,
     totalNftCount,
     enableNft,
+    enableRarity,
     rarityTiers,
+    myPoints,
+    myNftCount,
   ]);
 
   const addRarityTier = () => {
     const newId = Date.now().toString();
     setRarityTiers([
       ...rarityTiers,
-      { id: newId, name: "", count: 0, allocationPercent: 0 },
+      { id: newId, name: "", count: 0, allocationPercent: 0, myCount: 0 },
     ]);
   };
 
@@ -459,9 +495,80 @@ export default function Calculator() {
         </div>
       )}
 
+      {/* 自分の保有数 */}
+      <div className="bg-gray-800 rounded-xl p-5 space-y-4">
+        <h2 className="text-lg font-semibold text-white mb-3">{t.myHoldings}</h2>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-400 mb-1">{t.myPoints}</label>
+            <input
+              type="number"
+              value={myPoints}
+              onChange={(e) => setMyPoints(e.target.value)}
+              placeholder="0"
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          {enableNft && !enableRarity && (
+            <div className="flex flex-col">
+              <label className="text-sm text-gray-400 mb-1">{t.myNftCount}</label>
+              <input
+                type="number"
+                value={myNftCount}
+                onChange={(e) => setMyNftCount(e.target.value)}
+                placeholder="0"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          )}
+        </div>
+
+        {enableNft && enableRarity && (
+          <div className="space-y-2">
+            <label className="text-sm text-gray-400">{t.myNftCount}</label>
+            {rarityTiers.map((tier) => (
+              <div key={tier.id} className="flex items-center gap-2">
+                <span className="text-white text-sm w-24 truncate">{tier.name || t.notSet}</span>
+                <input
+                  type="number"
+                  value={tier.myCount || ""}
+                  onChange={(e) =>
+                    updateRarityTier(tier.id, "myCount", parseInt(e.target.value) || 0)
+                  }
+                  placeholder="0"
+                  className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* 計算結果 */}
       <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-xl p-5 space-y-4">
         <h2 className="text-lg font-semibold text-white mb-3">{t.results}</h2>
+
+        {/* 自分のエアドロップ価値 */}
+        <div className="bg-black/40 rounded-lg p-4 border border-yellow-500/30">
+          <p className="text-yellow-400 text-sm font-semibold mb-2">{t.myAirdropValue}</p>
+          <div className="space-y-1">
+            <div className="flex justify-between">
+              <span className="text-gray-400 text-sm">{t.myPointsValue}</span>
+              <span className="text-white font-semibold">{formatNumber(results.myPointsValue)}</span>
+            </div>
+            {enableNft && (
+              <div className="flex justify-between">
+                <span className="text-gray-400 text-sm">{t.myNftValue}</span>
+                <span className="text-white font-semibold">{formatNumber(results.myNftValue)}</span>
+              </div>
+            )}
+            <div className="flex justify-between pt-2 border-t border-gray-600">
+              <span className="text-yellow-400 font-semibold">{t.myTotalValue}</span>
+              <span className="text-yellow-400 text-xl font-bold">{formatNumber(results.myTotalValue)}</span>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-black/30 rounded-lg p-4">

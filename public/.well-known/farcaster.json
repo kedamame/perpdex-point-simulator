@@ -1,18 +1,20 @@
 {
-  "accountAssociation": {
-    "header": "",
-    "payload": "",
-    "signature": ""
-  },
   "frame": {
+    "name": "PerpDexPointSimulator",
     "version": "1",
-    "name": "PerpDex Airdrop Calculator",
-    "iconUrl": "/icon-192.png",
-    "homeUrl": "/",
-    "imageUrl": "/og-image.svg",
-    "buttonTitle": "Open Calculator",
-    "splashImageUrl": "/og-image.svg",
-    "splashBackgroundColor": "#111827",
-    "webhookUrl": ""
+    "iconUrl": "https://perpdex-point-simulator.vercel.app/icon.png",
+    "homeUrl": "https://perpdex-point-simulator.vercel.app",
+    "imageUrl": "https://perpdex-point-simulator.vercel.app/image.png",
+    "splashImageUrl": "https://perpdex-point-simulator.vercel.app/splash.png",
+    "splashBackgroundColor": "#3b82f6",
+    "webhookUrl": "https://perpdex-point-simulator.vercel.app/api/webhook",
+    "primaryCategory": "entertainment",
+    "description": "You can calculate the airdrop value from your Perpdex points.",
+    "subtitle": "Calculating the expected airdrop value of Perpdex points"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjIxMTE4OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweEFBZTM5NEQ1MWUyYzBhOTczNWUwQmI2NzdFMTJmMjE1MjVCRWI1NTIifQ",
+    "payload": "eyJkb21haW4iOiJwZXJwZGV4LXBvaW50LXNpbXVsYXRvci52ZXJjZWwuYXBwIn0",
+    "signature": "UGfxj96/lltK8m2W0WAllbrsuD3BqpqXCOvBfLHS9uUIvxiHb2PgiN3rOdlTy7B9AcL+2K7+kEh/EkT6UqPSyxw="
   }
 }

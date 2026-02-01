@@ -22,19 +22,21 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "PerpDex Airdrop Calculator",
-  description: "ポイントとNFTのエアドロップ価値を計算するツール",
+  description: "Calculate the value of PerpDex airdrop points and NFTs",
   manifest: "/manifest.json",
+  metadataBase: new URL("https://perpdex-point-simulator.vercel.app"),
   openGraph: {
     title: "PerpDex Airdrop Calculator",
     description: "Calculate the value of PerpDex airdrop points and NFTs",
     type: "website",
+    images: ["/image.png"],
   },
   other: {
     "fc:frame": "vNext",
-    "fc:frame:image": "/og-image.svg",
+    "fc:frame:image": "https://perpdex-point-simulator.vercel.app/image.png",
     "fc:frame:button:1": "Open Calculator",
     "fc:frame:button:1:action": "link",
-    "fc:frame:button:1:target": "/",
+    "fc:frame:button:1:target": "https://perpdex-point-simulator.vercel.app",
   },
 };
 

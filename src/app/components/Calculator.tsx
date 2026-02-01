@@ -227,8 +227,8 @@ export default function Calculator() {
         </h2>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-400 mb-1 min-h-[2.5rem] flex items-end">
               {t.totalPoints}
             </label>
             <input
@@ -239,8 +239,8 @@ export default function Calculator() {
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-400 mb-1 min-h-[2.5rem] flex items-end">
               {t.expectedFdv}
             </label>
             <input
@@ -251,8 +251,8 @@ export default function Calculator() {
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-400 mb-1 min-h-[2.5rem] flex items-end">
               {t.totalTokens}
             </label>
             <input
@@ -263,8 +263,8 @@ export default function Calculator() {
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500"
             />
           </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-400 mb-1 min-h-[2.5rem] flex items-end">
               {t.airdropPercent}
             </label>
             <input
